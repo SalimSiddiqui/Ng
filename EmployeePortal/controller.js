@@ -16,7 +16,19 @@
       $scope.getCompany = function (Company) {
           //Get Company.
           crudAPIFactory.getCompany(Company).success(function (response) {
-              $scope.Company = response.data;
+              // one Way to define object 
+              $scope.Company = {};            
+              $scope.Company.name = response[0].name
+             
+              // Other way to defind Object 
+              $scope.Company = {
+                  companyId: response[0].companyId,
+                  name: response[0].name,
+                  ceo: response[0].ceo,
+                  country: response[0].country,
+                  foundationYear: response[0].foundationYear,
+                  noOfEmployee: response[0].noOfEmployee
+              };             
           });
       };
 
@@ -24,7 +36,7 @@
           //Update Company.
           crudAPIFactory.updateCompany(Company).success(function (response) {
               crudAPIFactory.getCompanyList().success(function (response) {
-                  $scope.Companies = response.data;
+                  $scope.Companies = response;
               });
               $scope.clearUI();
           });
@@ -34,7 +46,7 @@
           //Update Company.
           crudAPIFactory.deletecompany(Company).success(function (response) {
               crudAPIFactory.getCompanyList().success(function (response) {
-                  $scope.Companies = response.data;
+                  $scope.Companies = response;
               });
           });
       };
@@ -42,7 +54,7 @@
       //Get Company List
       crudAPIFactory.getCompanyList().success(function (response) {
           //$scope.Companies = response.data;
-          console.log(response);
+         
           $scope.Companies = response;
       });
 

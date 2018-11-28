@@ -182,13 +182,22 @@ public class DDL_Service : System.Web.Services.WebService
     [WebMethod]
     public void GetCompData()
     {
+        GetCompDatafun(null);
+
+    }
+
+    private void GetCompDatafun(int? companyId)
+    {
         List<Company> DepList = new List<Company>();
         DataSet Ds = new DataSet();
         try
         {
             Cn.Open();
             Cmd.Connection = Cn;
+             if (companyId ==null)                          
             Cmd.CommandText = "Select * from Company;";
+             else
+             Cmd.CommandText = "select * from Company Where companyId="+ companyId;
             Cmd.CommandType = CommandType.Text;
         }
         catch (Exception ex)
@@ -207,11 +216,11 @@ public class DDL_Service : System.Web.Services.WebService
             DepList.Add(d);
         }
         dr.Close();
-         Cn.Close();
+        Cn.Close();
         JavaScriptSerializer Js = new JavaScriptSerializer();
         Context.Response.Write(Js.Serialize(DepList));
-
     }
+
     [WebMethod]    
     public void InsertCompData(Company Company)
     {
@@ -231,8 +240,51 @@ public class DDL_Service : System.Web.Services.WebService
         {
         }
         Cn.Close();
-    }    
-    
+    }
+    [WebMethod]
+    public void CompData(int companyId)
+    {
+        GetCompDatafun(companyId);
+    }
+
+    [WebMethod]
+    public void CompDataUpdate(Company Company)
+    {
+
+        DataSet Ds = new DataSet();
+       
+        int q = 0;
+        try
+        {
+            Cn.Open();
+            Cmd.Connection = Cn;
+            Cmd.CommandText = "update Company set name='"+ Company .name+ "' ,ceo='" + Company.ceo + "',country='" + Company.country + "',foundationYear='" + Company.foundationYear + "',noOfEmployee='" + Company.noOfEmployee + "' Where companyId="+Company.companyId;
+            Cmd.CommandType = CommandType.Text;
+            q = Cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+        }
+        Cn.Close();
+    }
+
+    [WebMethod]
+    public void CompDatadelete(int companyId)
+    {
+        try
+        {
+            Cn.Open();
+            Cmd.Connection = Cn;
+            Cmd.CommandText = "delete from Company Where companyId="+companyId;
+            Cmd.CommandType = CommandType.Text;
+            Cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+        }
+        Cn.Close();
+    }
+
 
 }
 #endregion

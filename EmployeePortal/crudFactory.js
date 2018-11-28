@@ -27,30 +27,34 @@
               data: obj
           });
          
-          console.log("createCompany");
+         
       };
 
       //Get Company.
       crudFactory.getCompany = function (Company) {
+         
           return $http({
-              url: "http://localhost:8080/SpringMavenRestDemoService/getcompany/" + Company.companyId,
+            //  url: "http://localhost:8080/SpringMavenRestDemoService/getcompany/" + Company.companyId,
+              url: '../WebService/DDL_Service.asmx/CompData?companyId=' + Company.companyId,
               method: 'GET',
           });
       };
 
       //Update Company.
       crudFactory.updateCompany = function (Company) {
+          var obj = {};
+          obj.Company = Company;
           return $http({
-              url: 'http://localhost:8080/SpringMavenRestDemoService/updatecompany/',
+              url: '../WebService/DDL_Service.asmx/CompDataUpdate',
               method: 'POST',
-              data: Company,
+              data: obj,
           });
       };
 
       //Delete Company.
       crudFactory.deletecompany = function (Company) {
           return $http({
-              url: 'http://localhost:8080/SpringMavenRestDemoService/deletecompany/' + Company.companyId,
+              url: '../WebService/DDL_Service.asmx/CompDatadelete?companyId=' + Company.companyId,
               method: 'GET',
           });
       };
