@@ -6,7 +6,7 @@
 </head>
 <body>
     <form name="companyForm">
-        <h1>Company Details</h1>
+        <h3>Company Details</h3>
         <div>
             <div style="float:left">
                 <table class="table table-bordered">
@@ -69,10 +69,10 @@
                         <td>
                             Company Name
                             <input type="hidden" data-ng-model="Company.companyId" required />
-
-                        </td>
+                            </td>
                         <td>
                             <input type="text" data-ng-model="Company.name" required />
+                            <span ng-show="companyForm.Company.name.$touched && companyForm.Company.name.$invalid">The name is required.</span>
                         </td>
                     </tr>
                     <tr>
@@ -80,7 +80,7 @@
                             CEO
                         </td>
                         <td>
-                            <input type="text" data-ng-model="Company.ceo" />
+                            <input type="text" data-ng-model="Company.ceo" required/>
                         </td>
                     </tr>
                     <tr>
@@ -88,7 +88,7 @@
                             Country
                         </td>
                         <td>
-                            <input type="text" data-ng-model="Company.country" />
+                            <input type="text" data-ng-model="Company.country" required/>
                         </td>
                     </tr>
                     <tr>
@@ -96,7 +96,7 @@
                             FoundationYear
                         </td>
                         <td>
-                            <input type="text" data-ng-model="Company.foundationYear" />
+                            <input type="text" data-ng-model="Company.foundationYear" required/>
                         </td>
                     </tr>
                     <tr>
@@ -104,13 +104,13 @@
                             NoOfEmployee
                         </td>
                         <td>
-                            <input type="text" data-ng-model="Company.noOfEmployee" />
+                            <input type="text" data-ng-model="Company.noOfEmployee" required/>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
-                            <input type="submit" value="Save" data-ng-click="createCompany(Company)" data-ng-disabled="companyForm.user.$dirty && companyForm.user.$invalid ||                    companyForm.Company.name.$dirty && companyForm.Company.name.$invalid" />
+                            <input type="submit" value="Save" data-ng-click="createCompany(Company)" data-ng-disabled="companyForm.user.$pristine && companyForm.user.$invalid || companyForm.Company.name.$dirty && companyForm.Company.name.$invalid" />
                             <input type="submit" value="Update" data-ng-click="updateCompany(Company)" />
                             <input type="reset" value="Clear" />
                         </td>
